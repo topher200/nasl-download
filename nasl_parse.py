@@ -1,3 +1,7 @@
+# Importing as fix for requests bug, see:
+# https://github.com/kennethreitz/requests/issues/858
+import chardet
+
 import bs4
 import re
 import requests
