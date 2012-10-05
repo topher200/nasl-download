@@ -5,10 +5,6 @@ import requests
 NASL_URL_ROOT = "http://www.nasl.tv"
 JUSTINTV_API_URL_TEMPLATE = "http://api.justin.tv/api/clip/show/%s.xml"
 
-# Returns true if the passed url is of a video from that week
-def from_week(url, week_number):
-  return re.search('/videos/w%d' % week_number, url)
-
 class Vod:
   def __init__(self, url):
     self.url = url
