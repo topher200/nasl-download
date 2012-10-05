@@ -9,6 +9,12 @@ JUSTINTV_API_URL_TEMPLATE = "http://api.justin.tv/api/clip/show/%s.xml"
 def from_week(url, week_number):
   return re.search('/videos/w%d' % week_number, url)
 
+class Vod:
+  def __init__(self, url):
+    self.url = url
+    self.week, self.division, self.match, self.game = \
+        re.search('videos/w(\d)/d(\d)/m(\d)g(\d).html', url).groups()
+
 def get_match_urls():
   matches_page = requests.get(''.join([NASL_URL_ROOT, '/p/s4videos']))
   soup = bs4.BeautifulSoup(matches_page.content)
