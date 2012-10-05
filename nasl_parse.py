@@ -65,15 +65,18 @@ def set_flv_url(vods):
       pass
 
 def download_vod(vod):
-  filename = "/media/data/Dropbox/NASL Season 4/%s/game %d/.flv"
-  if os.path.exists(os.path.dirname(filename)):
-    print('%s directory already exists. skipping')
+  dirname = "/media/data/Dropbox/NASL Season 4/Week %d/D%d_%s/game %d" % \
+      (vod.week, vod.division, vod.matchup_string, vod.game)
+  if os.path.exists(dirname):
+    print('%s directory already exists. skipping' % dirname)
+    return
   # make the folder even if there is no game
-  os.makedirs(filename)
+  os.makedirs(dirname)
   if (vod.flv_url == None):
     return
   binary_file = requests.get(vod.flv_url)
-  with open(filename, 'wb') as output_file:
+  filename = "%s Game %d.flv" % (vod.matchup_string, vod.game)
+  with open(os.path.join(dirname, filename), 'wb') as output_file:
     output_file.write(binary_file.content)
 
 def main():
