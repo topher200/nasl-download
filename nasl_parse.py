@@ -65,8 +65,10 @@ def set_flv_url(vods):
       pass
 
 def download_vod(vod):
-  dirname = "/media/data/Dropbox/NASL Season 4/Week %d/D%d_%s/game %d" % \
-      (vod.week, vod.division, vod.matchup_string, vod.game)
+  dirname = \
+      "/media/data/Dropbox/NASL Season 4/Week %d/NASL4W%dD%dM%d %s/game %d" % \
+      (vod.week, vod.week, vod.division, vod.match, vod.matchup_string,
+       vod.game)
   if os.path.exists(dirname):
     print('%s directory already exists. skipping' % dirname)
     return
@@ -75,7 +77,8 @@ def download_vod(vod):
   if (vod.flv_url == None):
     return
   binary_file = requests.get(vod.flv_url)
-  filename = "%s Game %d.flv" % (vod.matchup_string, vod.game)
+  filename = "NASL4W%dD%dM%d %s Game %d.flv" % \
+      (vod.week, vod.division, vod.match, vod.matchup_string, vod.game)
   with open(os.path.join(dirname, filename), 'wb') as output_file:
     output_file.write(binary_file.content)
 
