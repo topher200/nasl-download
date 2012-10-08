@@ -19,6 +19,9 @@ class Vod:
         map(int, re.search('videos/w(\d)/d(\d)/m(\d)g(\d).html', url).groups())
     self.flv_url = None
 
+  def underscored_matchup_string(self):
+    return re.sub(' ', '_', self.matchup_string)
+
 def get_all_vods():
   matches_page = requests.get(''.join([NASL_URL_ROOT, '/p/s4videos']))
   soup = bs4.BeautifulSoup(matches_page.content)
@@ -62,13 +65,14 @@ def set_flv_url(vods):
       vod.flv_url = get_flv_url(get_justintv_archive_id(vod.nasl_url))
     except:
       # some Vods don't have flvs
+      print('could not find flv file. skipping')
       pass
 
 def download_vod(vod):
   dirname = \
-      "/media/data/Dropbox/NASL Season 4/Week %d/NASL4W%dD%dM%d %s/game %d" % \
-      (vod.week, vod.week, vod.division, vod.match, vod.matchup_string,
-       vod.game)
+      "/media/data/Dropbox/NASL Season 4/Week %d/NASL4W%dD%dM%d_%s/game %d" % \
+      (vod.week, vod.week, vod.division, vod.match,
+       vod.underscored_matchup_string(), vod.game)
   if os.path.exists(dirname):
     print('%s directory already exists. skipping' % dirname)
     return
@@ -78,7 +82,8 @@ def download_vod(vod):
     return
   binary_file = requests.get(vod.flv_url)
   filename = "NASL4W%dD%dM%d %s Game %d.flv" % \
-      (vod.week, vod.division, vod.match, vod.matchup_string, vod.game)
+      (vod.week, vod.division, vod.match, vod.underscored_matchup_string(),
+       vod.game)
   with open(os.path.join(dirname, filename), 'wb') as output_file:
     output_file.write(binary_file.content)
 
