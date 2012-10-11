@@ -95,7 +95,7 @@ def download_vod(vod):
 def main():
   vods = get_all_vods()
   for vod in vods:
-    if (vod.week == 3):
+    if (vod.week == 4):
       set_flv_url([vod])
       print('starting %s game %s' % (vod.matchup_string, vod.game))
       download_vod(vod)
