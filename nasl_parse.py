@@ -75,7 +75,7 @@ def set_flv_url(vods):
 
 def download_vod(vod):
   dirname = \
-      "/media/data/Dropbox/NASL Season 4/Week %d/NASL4W%dD%dM%d_%s/game %d" % \
+      "/media/data/Dropbox/NASL Season 4/week_%d/NASL4W%dD%dM%d_%s/game %d" % \
       (vod.week, vod.week, vod.division, vod.match,
        vod.underscored_matchup_string(), vod.game)
   if os.path.exists(dirname):
