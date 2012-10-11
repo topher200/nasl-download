@@ -40,8 +40,13 @@ def get_all_vods():
     for link in row.find_all('a'):
       if (num_games >= 3):
         break
-      vods.append(Vod(matchup_string, str(link['href'])))
+      url = str(link['href'])
+      if (re.search('videos/w(\d)/d(\d)/m(\d)g(\d).html', url) == None):
+        continue
+      vods.append(Vod(matchup_string, url))
       num_games += 1
+    if (num_games == 0):
+      print("couldn't find any vod links for %s" % matchup_string)
   return vods
 
 def get_justintv_archive_id(nasl_url):
