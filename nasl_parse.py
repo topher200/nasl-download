@@ -94,10 +94,17 @@ def download_vod(vod):
 
 def main():
   vods = get_all_vods()
+  matches_with_no_vods = []
   for vod in vods:
     if (vod.week == 4):
       set_flv_url([vod])
+      if (vod.game == 1) and (vod.flv_url == None):
+        print('no link to game 1 of %s' % vod.matchup_string)
+        matches_with_no_vods.append(vod.matchup_string)
       print('starting %s game %s' % (vod.matchup_string, vod.game))
+      if (vod.matchup_string in matches_with_no_vods):
+        print('skipping game due to no vods')
+        continue
       download_vod(vod)
       print('completed %s game %s' % (vod.matchup_string, vod.game))
 
