@@ -96,7 +96,7 @@ def main():
   vods = get_all_vods()
   matches_with_no_vods = []
   for vod in vods:
-    if (vod.week == 4):
+    if (vod.week == 5):
       set_flv_url([vod])
       if (vod.game == 1) and (vod.flv_url == None):
         print('no link to game 1 of %s' % vod.matchup_string)
