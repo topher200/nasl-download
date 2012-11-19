@@ -14,7 +14,7 @@ JUSTINTV_API_URL_TEMPLATE = "http://api.justin.tv/api/clip/show/%s.xml"
 class Vod:
   def __init__(self, matchup_string, url):
     self.matchup_string = matchup_string
-    self.nasl_url = ''.join([NASL_URL_ROOT, url])
+    self.nasl_url = url
     self.week, self.division, self.match, self.game = \
         map(int, re.search('videos/w(\d)/d(\d)/m(\d)g(\d).html', url).groups())
     self.flv_url = None
